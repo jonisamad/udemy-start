@@ -32,6 +32,20 @@ class PostController extends Controller
         return view('posts.show', ['post' => Blogspot::findorFail($id)]);
     }
     
+    public function create(){
+
+        return view('posts.create');
+    }
+
+    public function store(Request $request){
+        
+        // return view('posts.store');
+        // dd($request->all());
+        $title = $request->input('title');
+        $content = $request->input('content');
+         
+        dd($title, $content);
+    }
 
     
 }
