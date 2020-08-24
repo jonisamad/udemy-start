@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 use App\BlogSpot;
 use Illuminate\Http\Request;
 
-class PostController extends Controller
-{
+class PostController extends Controller{
     /**
      * Display a listing of the resource.
      *
@@ -26,14 +25,15 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show(Request $request,$id){
         // dd(BlogSpot::find($id));
+        $request->session()->reflash();
         return view('posts.show', ['post' => Blogspot::findorFail($id)]);
+
     }
     
     public function create(){
-
+    
         return view('posts.create');
     }
 
@@ -44,8 +44,9 @@ class PostController extends Controller
         $blogpost->content =$request->input('content');
         $blogpost->save();
 
+        $request ->session ()->flash('status', 'Blog post Was Created!');
+
         return redirect()->route('posts.show',['post'=> $blogpost->id]);
     }
-
     
 }

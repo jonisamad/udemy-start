@@ -12,6 +12,13 @@
     <li><a href="{{ route('posts.index')}}">Posts</a></li>
     <li><a href="{{ route('posts.create')}}">Add Blog Post</a></li>
 </ul>
-    @yield('content')
+
+@if(session()->has('status'))
+    <p style="color: green">
+        {{ session()->get('status')}}
+    </p>
+@endif
+
+@yield('content')
 </body>
 </html>
