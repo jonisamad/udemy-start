@@ -39,6 +39,12 @@ class PostController extends Controller{
 
     public function store(Request $request){
         
+
+        $vakidateData = $request->validate([
+            'title'=>'required|max:100',
+            'content'=>'required'
+        ]);
+
         $blogpost = new BlogSpot();
         $blogpost->title =$request->input('title');
         $blogpost->content =$request->input('content');
