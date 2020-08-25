@@ -41,8 +41,8 @@ class PostController extends Controller{
         
 
         $vakidateData = $request->validate([
-            'title'=>'required|max:100',
-            'content'=>'required'
+            'title'=>'bail|min:15|required|max:100|',
+            'content'=>'required|min:10'
         ]);
 
         $blogpost = new BlogSpot();
