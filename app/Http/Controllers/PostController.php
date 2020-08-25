@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\BlogSpot;
 use Illuminate\Http\Request;
+Use App\Http\Requests\StorePost;
 
 class PostController extends Controller{
     /**
@@ -37,19 +38,11 @@ class PostController extends Controller{
         return view('posts.create');
     }
 
-    public function store(Request $request){
+    public function store(StorePost $request){
         
 
-        $vakidateData = $request->validate([
-            'title'=>'bail|min:15|required|max:100|',
-            'content'=>'required|min:10'
-        ]);
-
-        $blogpost = new BlogSpot();
-        $blogpost->title =$request->input('title');
-        $blogpost->content =$request->input('content');
-        $blogpost->save();
-
+        $validateData = $request->validated();
+        $blogpost = BlogSpot::create($validateData);
         $request ->session ()->flash('status', 'Blog post Was Created!');
 
         return redirect()->route('posts.show',['post'=> $blogpost->id]);
