@@ -26,9 +26,9 @@ class PostController extends Controller{
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request,$id){
-        // dd(BlogSpot::find($id));
-        $request->session()->reflash();
+    public function show($id){
+        
+  
         return view('posts.show', ['post' => Blogspot::findorFail($id)]);
 
     }
@@ -47,5 +47,19 @@ class PostController extends Controller{
 
         return redirect()->route('posts.show',['post'=> $blogpost->id]);
     }
-    
+     public function edit($id){
+
+        $post = Blogspot::findorFail($id);
+         return view('posts.edit', ['post' => $post]);
+     }
+
+     public function update(StorePost $request, $id){
+
+        $post = Blogspot::findorFail($id);
+        $validateData = $request->validated();
+
+        $post->fill($validateData);
+        $request ->session ()->flash('status', 'Blog post Was updated!');
+        return redirect()->route('posts.show', ['post' => $post->id]);
+    }
 }
